@@ -17,7 +17,7 @@ exports.registration = (req, res) => {
 exports.authentication = (req, res) => {
   const { email, password } = req.body;
   const SECRET_KEY = process.env.JWT_SECRET_KEY;
-  const request = `SELECT id FROM users WHERE email_address = '${email}' 
+  const request = `SELECT * FROM users WHERE email_address = '${email}' 
                    AND password = '${password}'`;
 
   database.query(request)
@@ -27,13 +27,9 @@ exports.authentication = (req, res) => {
         const token = jwt.sign(
           {
             id: response.rows[0].id,
-            role: 0
+            isAdmin: response.rows[0].isAdmin,
           },
           SECRET_KEY,
-          {
-            algorithm: 'HS256',
-            expiresIn: 60 * 60
-          }
         );
         res.status(200).send({ token: token })
       } else {
