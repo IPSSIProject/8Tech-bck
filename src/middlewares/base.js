@@ -52,8 +52,8 @@ exports.checkUserTokenId = (userId) => {
   return (req, res, next) => {
     const token = verifyUserToken(req);
     if (token) {
-      console.log(req.params[userId])
-      token.id == req.params[userId] || token.role == 1
+      console.log({paramsId: req.params[userId], tokenId: token.id})
+      token.id.toString() === req.params[userId]
         ? next()
         : res.status(401).send({ error: 'Not authorized' });
     } else {
