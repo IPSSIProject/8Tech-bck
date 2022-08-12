@@ -5,8 +5,8 @@ const dotenv = require('dotenv').config();
 /** User creation controller */
 exports.registration = (req, res) => {
   const user = req.body;
-  const request = `INSERT INTO users (firstname, lastname, email_address, password)
-                   VALUES ('${user.firstname}', '${user.lastname}', '${user.email}', '${user.password}')`;
+  const request = `INSERT INTO users (firstname, lastname, email_address, password, defaultAddress)
+                   VALUES ('${user.firstname}', '${user.lastname}', '${user.email}', '${user.password}', '${user.defaultAddress}')`;
 
   database.query(request)
     .then(response => res.status(201).send(response))
@@ -68,6 +68,7 @@ exports.updateUser = (req, res) => {
   const request = `UPDATE users
                    SET firstname = '${user.firstname}', lastname = '${user.lastname}', 
                    email_address = '${user.email}', password = '${user.password}'
+                   defaultAddress = '${user.defaultAddress}'
                    WHERE id = ${id} RETURNING *;`
 
   database.query(request)
