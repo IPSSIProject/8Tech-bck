@@ -40,7 +40,7 @@ module.exports = (app) => {
         .delete(checkIfParamIsNumber, userControllers.deleteUser); // Admin
     app.route('/api/user/registration')
         .post(
-            [checkModelFields(userModel), checkUserAlreadyExist],
+            [checkUserAlreadyExist],
             userControllers.registration
         );
     app.route('/api/user/authentication')
